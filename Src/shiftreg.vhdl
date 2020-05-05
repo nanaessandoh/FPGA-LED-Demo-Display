@@ -1,18 +1,18 @@
--- Shift register that rotates pattern left (dir=1) or right
--- on clock if enabled.  Has parallel load that dominates,
+-- Shift register that rotates pattern left or right
+-- on clock if enabled.  Has parallel load that dominates
 -- async reset.
 
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity shiftreg18 is
+entity shiftreg10 is
   port( load_val: in std_logic_vector(9 downto 0);
         clk, rstb: in std_logic;
         mode: in std_logic_vector(1 downto 0); -- 00 hold, 01 right, 10 left, 11 load 
         val_out: out std_logic_vector(9 downto 0));
-end shiftreg18;
+end shiftreg10;
 
-architecture rtl of shiftreg18 is
+architecture behav of shiftreg10 is
   signal pattern: std_logic_vector(9 downto 0) := "0000000000";
 begin
 
@@ -43,4 +43,4 @@ begin
   end process;
   
   val_out <= pattern;
-end rtl;
+end behav;

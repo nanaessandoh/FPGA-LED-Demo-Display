@@ -9,26 +9,15 @@ The specifications of the design are;
 * The rset button will be assigned to KEY0.
 * The state machine used is a Mealy machine ( Depends on the current state and input).
 
-    .
-    ├── ...
-    ├── demo_display.vhdl   # Top Level Entity
-    │   └── cylon.vhdl              
-    │       ├── counter1S.vhdl    # Counter running on the 50Mhz clock and output a control signal every 0.02 sec.
-    │       ├── counter10.vhdl    # Counter (0-10).
-    │       ├── led_control.vhdl  # Mealy State Machine for Demo Display.                          
-    │       └── shiftreg.vhdl     # Shift register to shift the bit to be displayed on the LEDs.  
-    └── ...
 
 A RTL Structure of the design is
 
     .
     ├── ...
-    ├── alu.vhdl   # Top Level Entity
-    │   ├── and_gate.vhdl                
-    │   ├── or_gate.vhdl                 
-    │   ├── seven_segment_decoder.vhdl  
-    │   ├── adder.vhdl                  
-    │   │   └──  adder_unit.vhdl      
-    │   └── subtractor_unit              
-    │       └──  adder_unit.vhdl       
+    ├── demo_display.vhdl         # Top Level Entity
+    │   └── cylon.vhdl              
+    │       ├── counter1S.vhdl    # Counter running on the 50Mhz clock and output a control signal every 0.02 sec.
+    │       ├── counter10.vhdl    # Counter (0-10).
+    │       ├── led_control.vhdl  # Mealy State Machine for Demo Display.                          
+    │       └── shiftreg.vhdl     # Shift register to shift the bit to be displayed on the LEDs.       
     └── ...

@@ -1,4 +1,4 @@
--- Counter based on 50 MHz clock that outputs a control signal representing 1 second 
+-- Counter based on 50 MHz clock that outputs a control signal representing 0.02 second 
 -- at 1M, with asynchronous reset and
 -- a synchronous clear.
 
@@ -24,7 +24,7 @@ begin
       if (clr = '1') then
         cnt <= "00000000000000000000";
       elsif (en = '1') then
-        if (cnt = "11110100001001000000") then
+        if (cnt = "11110100001001000000") then -- 0.02 sec
           cnt1M <= '1';
           cnt <= "00000000000000000000";
         else

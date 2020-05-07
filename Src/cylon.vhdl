@@ -9,24 +9,24 @@ end cylon;
 architecture behav of cylon is
 
   -- Declare Components
-  component shiftreg10 is
+  component shiftreg10 
     port( load_val: in std_logic_vector(9 downto 0);
           clk, rstb: in std_logic;
           mode: in std_logic_vector(1 downto 0); -- 00 hold, 01 right, 10 left, 11 load 
           val_out: out std_logic_vector(9 downto 0));
   end component;
   
-  component counter1m is
+  component counter1m
     port( clk, rstb, clr, en: in std_logic;
           cnt1m: out std_logic);
   end component;
   
-  component counter10 is
+  component counter10 
     port( clk, rstb, clr, en: in std_logic;
           cnt10: out std_logic);
   end component;
   
-  component led_control is
+  component led_control 
     port( cnt1m, cnt10, clk, rstb: in std_logic;
         shift_reg_mode: out std_logic_vector(1 downto 0));
   end component;

@@ -20,7 +20,7 @@ begin
   process (clk, rstb)
   begin
     if (rstb = '0') then -- asynchronous active low reset
-      pattern <= "00000000000";
+      pattern <= "0000000000";
     elsif (clk'event) and (clk = '1') then
       case mode is
         when "00" =>

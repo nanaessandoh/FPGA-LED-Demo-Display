@@ -26,7 +26,7 @@ begin
       elsif (en = '1') then
         if (cnt = "1010") then
           cnt10 <= '1';
-          cnt <= "00000";
+          cnt <= "0000";
         else
           cnt10 <= '0';
           cnt <= cnt + '1';

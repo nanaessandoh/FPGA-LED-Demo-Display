@@ -37,7 +37,7 @@ begin
           pattern <= load_val;
         when others =>
           -- hold in error case
-          pattern <= pattern;
+          pattern <= "1000000000";
       end case;      
     end if;
   end process;

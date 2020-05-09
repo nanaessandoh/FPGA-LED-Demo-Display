@@ -13,17 +13,17 @@ entity counter_src is
 end counter_src;
 
 architecture behav of counter_src is
-  signal cnt: std_logic_vector(23 downto 0) := "000000000000000000000000";
+  signal cnt: std_logic_vector(19 downto 0) := "00000000000000000000";
 begin
 
   -- Clock the counter
   process (clk, rstb)
   begin
     if (rstb = '0') then -- asynchronous active low reset
-      cnt <= "000000000000000000000000";
+      cnt <= "00000000000000000000";
     elsif (clk'event) and (clk = '1') then
       if (clr = '1') then
-        cnt <= "000000000000000000000000";
+        cnt <= "00000000000000000000";
       elsif (en = '1') then
       if (sig_01 = '1') then
           if (cnt = "000001111010000100100000") then -- 0.01 sec
@@ -73,7 +73,7 @@ begin
               cntM <= '0';
               cnt <= cnt + '1';
             end if;
-      end if;
+      end if
       else
         cnt <= cnt;
         cntM <= '0';        

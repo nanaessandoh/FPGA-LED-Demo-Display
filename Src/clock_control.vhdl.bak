@@ -6,10 +6,10 @@ use ieee.std_logic_unsigned.all;
 
 entity clock_control is
   port( key, clk, rstb: in std_logic;
-        time_01, time_02, time_04, time_08, time_16, time_32: out std_logic);
+        time_01, time_02, time_04, time_08, time_16, time_32: out std_logic;
 end clock_control;
 
-architecture behav of clock_control is
+architecture behav of led_control is
 
   -- Declare state type
   type time_state is (T01, T02, T04, T08, T16, T32);

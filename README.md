@@ -15,10 +15,11 @@ A RTL Structure of the design is
 
     .
     ├── ...
-    ├── demo_display.vhdl         # Top Level Entity
+    ├── demo_display.vhdl           # Top Level Entity
     │   └── cylon.vhdl              
-    │       ├── counter1S.vhdl    # Counter running on the 50Mhz clock and output a control signal every 0.02 sec.
-    │       ├── counter10.vhdl    # Counter (0-10).
-    │       ├── led_control.vhdl  # Mealy State Machine for Demo Display.                          
-    │       └── shiftreg.vhdl     # Shift register to shift the bit to be displayed on the LEDs.       
+    │       ├── counter_src.vhdl    # Counter running on the 50Mhz clock and output a control signal based on the rate.
+    │       ├── counter10.vhdl      # Counter (0-10).
+    │       ├── led_control.vhdl    # Mealy State Machine for Demo Display. 
+    │       ├── clock_control.vhdl  # Mealy State Machine for Clock rate Control.                          
+    │       └── shiftreg.vhdl       # Shift register to shift the bit to be displayed on the LEDs.       
     └── ...

@@ -15,7 +15,7 @@ end shiftreg10;
 architecture behav of shiftreg10 is
   signal pattern: std_logic_vector(9 downto 0) := "1000000000";
   signal HoldRight: std_logic_vector(9 downto 0) := "0000000001";
-  signal HoldLeft: std_logic_vector(9 downto 0) := "1000000000";
+  signal HoldLeft: std_logic_vector(9 downto 0) := 
 
 begin
 
@@ -23,12 +23,12 @@ begin
   process (clk, rstb)
   begin
     if (rstb = '0') then -- asynchronous active low reset
-      pattern <= HoldLeft;
+      pattern <= "1000000000";;
     elsif (clk'event) and (clk = '1') then
       case mode is
         when "00" =>
-          -- hold
-          pattern <= pattern;
+          -- Hold Right
+          pattern <= "1000000000";;
         when "10" =>
           -- left shift
           pattern <= pattern(8 downto 0) & pattern(9);
@@ -37,7 +37,7 @@ begin
           pattern <= pattern(0) & pattern(9 downto 1);
         when "11" =>
           -- Hold Right
-          pattern <= HoldRight;
+          pattern <= "0000000001";
         when others =>
           -- hold in error case
           pattern <= pattern;

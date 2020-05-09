@@ -24,7 +24,7 @@ begin
       if (clr = '1') then
         cnt <= "0000";
       elsif (en = '1') then
-        if (cnt = "1010") then
+        if (cnt = "1001") then
           cnt10 <= '1';
           cnt <= "0000";
         else
@@ -32,7 +32,7 @@ begin
           cnt <= cnt + '1';
         end if;
       else
-        -- Hold count, no outputs---only on cycle when count 17 is reached
+        -- Hold count, no outputs
         cnt <= cnt;
         cnt10 <= '0';
       end if;

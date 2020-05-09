@@ -12,7 +12,7 @@ end clock_control;
 architecture behav of led_control is
 
   -- Declare state type
-  type time_state is (Init, T01, T02, T04, T08, T16, T32);
+  type time_state is (T01, T02, T04, T08, T16, T32);
   signal state: time_state;
 begin
 

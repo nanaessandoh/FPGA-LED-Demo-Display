@@ -24,17 +24,17 @@ begin
     elsif (clk'event) and (clk = '1') then
       case mode is
         when "00" =>
-          -- hold
-          pattern <= pattern;
-        when "10" =>
-          -- left shift
-          pattern <= pattern(8 downto 0) & pattern(9);
-        when "01" =>
-          -- right shift
-          pattern <= pattern(0) & pattern(9 downto 1);
-          when "11" =>
-          -- parallel load
+          -- Hold Right
           pattern <= load_val;
+          when "01" =>
+          -- Shift Right
+          pattern <= pattern(0) & pattern(9 downto 1);
+          when "10" =>
+          -- Shift Left
+          pattern <= pattern(8 downto 0) & pattern(9);
+          when "11" =>
+          -- Hold Left
+          pattern <= "1000000000";
         when others =>
           -- hold in error case
           pattern <= pattern;

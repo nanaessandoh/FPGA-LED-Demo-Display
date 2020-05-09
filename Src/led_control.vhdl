@@ -24,32 +24,26 @@ begin
       
       case state is
 
-        when HoldLeft =>
-          if cntM = '1' then
+        when HoldRight =>
             state <= ShiftLeft;
-          else
-            state <= HoldLeft;
+          end if;
+
+        when HoldLeft =>
+            state <= ShiftRight;
           end if;
 
         when ShiftLeft =>
           if cnt10 = '1' then
             state <= HoldRight;
           else
-            state <= HoldLeft;
-          end if;
-
-        when HoldRight =>
-          if cntM = '1' then
-            state <= ShiftRight;
-          else
-            state <= HoldRight;
+            state <= ShiftLeft;
           end if;
 
         when ShiftRight =>
           if cnt10 = '1' then
             state <= HoldLeft;
           else
-            state <= HoldRight;
+            state <= ShiftRight;
           end if;
 
         when others =>

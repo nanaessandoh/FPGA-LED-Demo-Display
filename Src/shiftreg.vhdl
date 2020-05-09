@@ -13,7 +13,7 @@ entity shiftreg10 is
 end shiftreg10;
 
 architecture behav of shiftreg10 is
-  signal pattern: std_logic_vector(9 downto 0) := "0000000001";
+  signal pattern: std_logic_vector(9 downto 0);
 begin
 
   -- Clock the register

@@ -26,11 +26,11 @@ begin
 
         when HoldRight =>
             state <= ShiftLeft;
-          end if;
+        
 
         when HoldLeft =>
             state <= ShiftRight;
-          end if;
+        
 
         when ShiftLeft =>
           if cnt10 = '1' then

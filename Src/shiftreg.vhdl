@@ -14,8 +14,6 @@ end shiftreg10;
 
 architecture behav of shiftreg10 is
   signal pattern: std_logic_vector(9 downto 0) := "1000000000";
-  signal HoldRight: std_logic_vector(9 downto 0) := "0000000001";
-  signal HoldLeft: std_logic_vector(9 downto 0) := 
 
 begin
 

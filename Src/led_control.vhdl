@@ -31,34 +31,35 @@ begin
         -- HoldLeft
         when HoldLeft =>
           if cnt1m = '1' then
-            state <= ShiftLeft;
-          else
-            state <= HoldLeft;
-          end if;
-
-         -- ShiftLeft 
-        when ShiftLeft =>
-          if cnt10 = '1' then
-            state <= HoldRight;
-          else
-            state <= HoldLeft;
-          end if;
-
-        -- HoldRight
-        when HoldRight =>
-          if cnt1m = '1' then
             state <= ShiftRight;
           else
-            state <= HoldRight;
+            state <= HoldLeft;
           end if;
 
         -- ShiftRight
         when ShiftRight =>
           if cnt10 = '1' then
-            state <= HoldLeft;
+            state <= HoldRight;
+          else
+            state <= ShiftRight;
+          end if;
+
+        -- HoldRight
+        when HoldRight =>
+          if cnt1m = '1' then
+            state <= ShiftLeft;
           else
             state <= HoldRight;
           end if;
+
+         -- ShiftLeft 
+        when ShiftLeft =>
+          if cnt10 = '1' then
+            state <= HoldLeft;
+          else
+            state <= ShiftLeft;
+          end if;
+
 
         -- Error Case
         when others =>
@@ -71,9 +72,11 @@ begin
   process(state)
   begin
     case state is
-      when Init => shift_reg_mode <= "11"; -- Load
+      when Init => shift_reg_mode <= "00"; -- Load
+      when HoldLeft => shift_reg_mode <= "00"; -- Load
       when ShiftLeft => shift_reg_mode <= "10"; -- left shift
       when ShiftRight => shift_reg_mode <= "01"; -- shift right
+      when HoldRight => shift_reg_mode <= "11"; -- Load
       when others => shift_reg_mode <= "00"; -- hold in both hold states or on error
     end case;
   end process;

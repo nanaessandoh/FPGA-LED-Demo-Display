@@ -1,5 +1,5 @@
--- Shift register that rotates pattern left or right
--- on clock if enabled.  Has parallel load that dominates
+-- Shift register that rotates pattern left (dir=1) or right
+-- on clock if enabled.  Has parallel load that dominates,
 -- async reset.
 
 library ieee;
@@ -13,29 +13,28 @@ entity shiftreg10 is
 end shiftreg10;
 
 architecture behav of shiftreg10 is
-  signal pattern: std_logic_vector(9 downto 0);
-
+  signal pattern: std_logic_vector(9 downto 0) := "0000000000";
 begin
 
   -- Clock the register
   process (clk, rstb)
   begin
     if (rstb = '0') then -- asynchronous active low reset
-      pattern <= load_val;
+      pattern <= "00000000000";
     elsif (clk'event) and (clk = '1') then
       case mode is
         when "00" =>
-          -- Hold Right
-          pattern <= load_val;
+          -- hold
+          pattern <= pattern;
         when "10" =>
           -- left shift
           pattern <= pattern(8 downto 0) & pattern(9);
         when "01" =>
           -- right shift
           pattern <= pattern(0) & pattern(9 downto 1);
-        when "11" =>
-          -- Hold Right
-          pattern <= pattern;
+          when "11" =>
+          -- parallel load
+          pattern <= load_val;
         when others =>
           -- hold in error case
           pattern <= pattern;
@@ -44,4 +43,6 @@ begin
   end process;
   
   val_out <= pattern;
+
+  
 end behav;

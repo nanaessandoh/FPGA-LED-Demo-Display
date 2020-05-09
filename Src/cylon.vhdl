@@ -28,7 +28,7 @@ architecture behav of cylon is
   end component;
   
   component led_control 
-    port( cnt1m, cnt10, clk, rstb: in std_logic;
+    port( cntM, cnt10, clk, rstb: in std_logic;
         shift_reg_mode: out std_logic_vector(1 downto 0));
   end component;
 

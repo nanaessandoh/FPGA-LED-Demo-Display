@@ -11,7 +11,7 @@ end led_control;
 
 architecture behav of led_control is
   -- Declare state type
-  type control_state is (Init, HoldLeft, ShiftLeft, HoldRight, ShiftRight);
+  type control_state is (HoldLeft, ShiftLeft, HoldRight, ShiftRight);
   signal state: control_state;
 begin
 
@@ -19,35 +19,39 @@ begin
   process (clk, rstb)
   begin
     if (rstb = '0') then -- asynchronous active low reset
-      state <= Init;
+      state <= HoldRight;
     elsif (clk'event) and (clk = '1') then
+      
       case state is
-        when Init =>
-          state <= HoldLeft;
+
         when HoldLeft =>
           if cntM = '1' then
             state <= ShiftLeft;
           else
             state <= HoldLeft;
           end if;
+
         when ShiftLeft =>
           if cnt10 = '1' then
             state <= HoldRight;
           else
             state <= HoldLeft;
           end if;
+
         when HoldRight =>
           if cntM = '1' then
             state <= ShiftRight;
           else
             state <= HoldRight;
           end if;
+
         when ShiftRight =>
           if cnt10 = '1' then
             state <= HoldLeft;
           else
             state <= HoldRight;
           end if;
+
         when others =>
           -- Error case
           state <= Init;  
@@ -59,7 +63,7 @@ begin
     process(state)
     begin
       case state is
-        when Init => shift_reg_mode <= "11"; -- Load
+        when HoldRight => shift_reg_mode <= "11"; -- Load
         when ShiftLeft => shift_reg_mode <= "10"; -- left shift
         when ShiftRight => shift_reg_mode <= "01"; -- shift right
         when others => shift_reg_mode <= "00"; -- hold in both hold states or on error

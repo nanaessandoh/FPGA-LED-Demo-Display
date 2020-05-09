@@ -49,7 +49,7 @@ begin
   -- Tie lights to pattern
   lights <= shifter_out;
 
-  start_pattern <= "1000000000";
+  start_pattern <= "0000000001";
 
 
   -- instantiate counter source

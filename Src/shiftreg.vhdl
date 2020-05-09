@@ -13,14 +13,14 @@ entity shiftreg10 is
 end shiftreg10;
 
 architecture behav of shiftreg10 is
-  signal pattern: std_logic_vector(9 downto 0) := "0000000000";
+  signal pattern: std_logic_vector(9 downto 0) := "0000000001";
 begin
 
   -- Clock the register
   process (clk, rstb)
   begin
     if (rstb = '0') then -- asynchronous active low reset
-      pattern <= "00000000000";
+      pattern <= "0000000001";
     elsif (clk'event) and (clk = '1') then
       case mode is
         when "00" =>
@@ -44,5 +44,5 @@ begin
   
   val_out <= pattern;
 
-  
+
 end behav;

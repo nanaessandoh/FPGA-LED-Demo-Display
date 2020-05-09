@@ -33,6 +33,16 @@ begin
             state <= HoldLeft;
           end if;
 
+        when HoldRight =>
+          if cntM = '1' then
+            state <= ShiftRight;
+          else
+            state <= HoldRight;
+          end if;
+
+
+
+
         when ShiftLeft =>
           if cnt10 = '1' then
             state <= HoldRight;
@@ -41,12 +51,7 @@ begin
           end if;
           
 
-        when HoldRight =>
-          if cntM = '1' then
-            state <= ShiftRight;
-          else
-            state <= HoldRight;
-          end if;
+
 
         when ShiftRight =>
           if cnt10 = '1' then
@@ -55,7 +60,7 @@ begin
             state <= HoldRight;
           end if;
 
-          
+
         when others =>
           -- Error case
           state <= Init;  

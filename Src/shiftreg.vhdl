@@ -25,7 +25,7 @@ begin
       case mode is
         when "00" =>
           -- hold
-          pattern <= pattern;
+          pattern <= "1000000000";
         when "10" =>
           -- left shift
           pattern <= pattern(8 downto 0) & pattern(9);

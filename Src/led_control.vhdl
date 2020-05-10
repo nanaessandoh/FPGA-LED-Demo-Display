@@ -5,79 +5,80 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity led_control is
-  port( cntM, cnt10, clk, rstb: in std_logic;
-        shift_reg_mode: out std_logic_vector(1 downto 0));
+  port( cnt10, clk, rstb: in std_logic;
+        shift_reg_mode: out std_logic );
 end led_control;
 
 architecture behav of led_control is
   -- Declare state type
-  type control_state is (Init, HoldLeft, ShiftLeft, HoldRight, ShiftRight);
-  signal state: control_state;
+  type state_type is (Reset, ShiftLeft, ShiftRight);
+  signal current_state, next_state: state_type;
+
+
 begin
 
-  -- Implement flip-flops for state machine
+
+  Sequential:
   process (clk, rstb)
   begin
-    if (rstb = '0') then -- asynchronous active low reset
-      state <= Init;
-    elsif (clk'event) and (clk = '1') then
-      case state is
+      case current_state is
 
-        when Init =>
-          state <= HoldLeft;
-
-        when HoldLeft =>
-          if cntM = '1' then
-            state <= ShiftLeft;
-          else
-            state <= HoldLeft;
-          end if;
-
-        when HoldRight =>
-          if cntM = '1' then
-            state <= ShiftRight;
-          else
-            state <= HoldRight;
-          end if;
-
-
-
-
-        when ShiftLeft =>
-          if cnt10 = '1' then
-            state <= HoldRight;
-          else
-            state <= HoldLeft;
-          end if;
-          
-
-
+        when Reset =>
+          next_state <= ShiftRight;
 
         when ShiftRight =>
           if cnt10 = '1' then
-            state <= HoldLeft;
+            next_state <= ShiftLeft;
           else
-            state <= HoldRight;
+            next_state <= ShiftRight;
           end if;
 
+        when ShiftLeft =>
+          if cnt10 = '1' then
+            next_state <= ShiftRight;
+          else
+            next_state <= ShiftLeft;
+          end if;
 
         when others =>
           -- Error case
-          state <= Init;  
+          next_state <= Reset;  
+
       end case;
-    end if;
     end process;
+
+
+    	clock_state_machine:
+	process(clk,rstb)
+	begin
+	if (rstb = '0') then
+	current_state <= Reset;
+	elsif (clk'event and clk = '1') then
+	current_state <= next_state;
+	end if;
+	end process clock_state_machine;
   
-    -- Generate outputs based on state
-    process(state)
-    begin
-      case state is
-        when Init => shift_reg_mode <= "11"; -- Load
-        when ShiftLeft => shift_reg_mode <= "10"; -- left shift
-        when ShiftRight => shift_reg_mode <= "01"; -- shift right
-        when others => shift_reg_mode <= "00"; -- hold in both hold states or on error
-      end case;
-    end process;
+
+	combinational:
+	process(clk, rstb)
+	begin
+
+	if ( clk'event and clk = '1') then
+
+
+	if (current_state = ShiftRight) then
+	shift_reg_mode <= '0';
+	end if;
+
+	if (current_state = ShiftLeft) then
+	shift_reg_mode <= '1';
+	end if;
+
+	end if;
+
+	end process combinational;
+
+
   
   end behav;
   

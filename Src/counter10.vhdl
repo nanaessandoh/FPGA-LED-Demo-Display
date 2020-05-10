@@ -1,6 +1,5 @@
--- Counter that outputs a control signal (cnt10) at count 10
+-- Counter that outputs a control signal (cnt10) at count 8
 -- with asynchronous reset and
--- a synchronous clear.
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -24,7 +23,7 @@ begin
       if (clr = '1') then
         cnt <= "0000";
       elsif (en = '1') then
-        if (cnt = "1001") then
+        if (cnt = "1000") then
           cnt10 <= '1';
           cnt <= "0000";
         else

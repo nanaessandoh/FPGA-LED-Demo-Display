@@ -1,4 +1,4 @@
--- Counter based on 50 MHz clock that outputs a control signal representing 0.02 second 
+-- Counter based on 50 MHz clock that outputs a control signal representing different seconds 
 -- at 1M, with asynchronous reset and
 -- a synchronous clear.
 
@@ -7,7 +7,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity counter_src is
-  port( clk, rstb, clr, en: in std_logic;
+  port( clk, rstb, en: in std_logic;
         sig_01, sig_02, sig_04, sig_08, sig_16, sig_32: in std_logic; -- Variable Speed inputs for the counter
         cntM: out std_logic);
 end counter_src;
@@ -22,11 +22,10 @@ begin
     if (rstb = '0') then -- asynchronous active low reset
       cnt <= "000000000000000000000000";
     elsif (clk'event) and (clk = '1') then
-      if (clr = '1') then
-        cnt <= "000000000000000000000000";
-      elsif (en = '1') then
+     if (en = '1') then
       if (sig_01 = '1') then
-          if (cnt = "000001111010000100100000") then -- 0.01 sec
+	--if (cnt = "000000000000000000000010") then -- Uncomment For Testbench Purpose
+         if (cnt = "000001111010000100100000") then -- 0.01 sec
           cntM <= '1';
          cnt <= "000000000000000000000000";
         else

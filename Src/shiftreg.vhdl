@@ -1,46 +1,51 @@
--- Shift register that rotates pattern left (dir=1) or right
--- on clock if enabled.  Has parallel load that dominates,
--- async reset.
+-- Shift register that rotates pattern left or right
+-- on clock if enabled.
+-- async load(reset).
 
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity shiftreg10 is
-  port( load_val: in std_logic_vector(9 downto 0);
-        clk, rstb: in std_logic;
-        mode: in std_logic_vector(1 downto 0); -- 00 hold, 01 right, 10 left, 11 load 
+entity shift_reg is
+  port( clk,rstb, en: in std_logic;
+        mode: in std_logic; -- 0 left, 1 right
         val_out: out std_logic_vector(9 downto 0));
-end shiftreg10;
+end shift_reg;
 
-architecture behav of shiftreg10 is
-  signal pattern: std_logic_vector(9 downto 0) := "0000000001";
+architecture behav of shift_reg is
+  
+signal pattern: std_logic_vector(9 downto 0):= "1000000000";
+
 begin
 
   -- Clock the register
-  process (clk, rstb)
+  process (clk,rstb)
   begin
-    if (rstb = '0') then -- asynchronous active low reset
-      pattern <= "0000000001";
-    elsif (clk'event) and (clk = '1') then
+     if (rstb = '0') then -- asyn reset
+	pattern <= "1000000000";
+      elsif (clk'event) and (clk = '1') then
+     if ( en = '1') then
+
       case mode is
-        when "00" =>
-          -- hold
-          pattern <= "1000000000";
-        when "10" =>
-          -- left shift
-          pattern <= pattern(8 downto 0) & pattern(9);
-        when "01" =>
-          -- right shift
-          pattern <= pattern(0) & pattern(9 downto 1);
-          when "11" =>
-          -- parallel load
-          pattern <= load_val;
-        when others =>
-          -- hold in error case
-          pattern <= "1000000000";
-      end case;      
+        when '0' => -- Shift Right
+         for i in 0 to 8 loop 
+          pattern(i) <= pattern(i+1); 
+         end loop; 
+         pattern(9) <= pattern(0); 
+
+       when '1' =>  -- Shift Left
+          for i in 0 to 8 loop 
+          pattern(i+1) <= pattern(i); 
+         end loop; 
+         pattern(0) <= pattern(9); 
+       
+	when others => -- Error Case
+          pattern <= pattern;
+	
+	end case;
+     end if;
     end if;
   end process;
   
   val_out <= pattern;
+
 end behav;

@@ -41,14 +41,14 @@ end component;
   -- Declare Signals
   signal cntM, cnt_10: std_logic;
   signal T_01, T_02, T_04, T_08, T_16, T_32: std_logic;
-  signal shifter_out: std_logic_vector(9 downto 0);
-  signal shifter_mode: std_logic;
+  signal shifter_Out: std_logic_vector(9 downto 0);
+  signal shifter_Mode: std_logic;
 
 
 begin  
 
   -- Tie lights to pattern
-  lights <= shifter_out;
+  lights <= shifter_Out;
 
 
   -- instantiate counter source
@@ -58,10 +58,10 @@ begin
   ctr1: counter10 port map(clk, rstb, cntM, cnt_10);
 
   -- instantiate shifter
-  shifter0: shift_reg port map(clk, rstb, cntM , shifter_mode, shifter_out);
+  shifter0: shift_reg port map(clk, rstb, cntM , shifter_Mode, shifter_Out);
 
   -- instantiate LED controller
-  ledctrl0: led_control port map(cnt_10, clk, rstb, shifter_mode);
+  ledctrl0: led_control port map(cnt_10, clk, rstb, shifter_Mode);
 
   -- instantiate Counter controller
   sm1: clock_control port map(key, clk, rstb, T_01, T_02, T_04, T_08, T_16, T_32);
